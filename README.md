@@ -1,8 +1,8 @@
 # 🌍 KML Studio
 
 ![Made in Costa Rica](https://img.shields.io/badge/Made%20in-Costa%20Rica-blue)
-![License](https://img.shields.io/badge/License-MIT-green)
 ![Status](https://img.shields.io/badge/Status-Active-success)
+![License](https://img.shields.io/badge/License-Proprietary-red)
 
 **KML Studio** is a lightning-fast, client-side web application designed to generate, compress, and preview Keyhole Markup Language (KML) and KMZ files directly in the browser. 
 
@@ -16,24 +16,20 @@ It solves a common problem for mobile users, topographers, and architects: smart
 *   🌐 **Multilingual Support:** Auto-detects and supports 7 languages: English, Spanish, Portuguese, French, German, Chinese, and Japanese.
 *   📱 **Responsive Design:** Fully optimized for both desktop and mobile use.
 
-## 🛠️ Built With
-
-*   **HTML5 / Vanilla JavaScript**
-*   **Tailwind CSS** (via CDN for rapid UI styling)
-*   **Leaflet.js** (Interactive mapping)
-*   **JSZip** (Client-side ZIP compression)
-
 ## 🚀 Live Demo
 
-You can try the live version of the tool here: 
-👉 **[Insert your Vercel or KMLStudio.com link here]**
+You can access the live version of the tool here: 
+👉 **[https://kmlstudio.vercel.app/](https://kmlstudio.vercel.app/)**
 
-## 💻 How to Run Locally
+## ⚖️ Legal & Copyright
 
-Because this project is built entirely with client-side technologies, there is no need for `npm install` or complex build processes.
+**Copyright © 2026 Haendel Lacayo. All rights reserved.**
 
-1. Clone the repository:
-   ```bash
-   git clone [https://github.com/yourusername/kml-studio.git](https://github.com/yourusername/kml-studio.git)
+This code and application are proprietary and closed-source. Unauthorized copying, modification, distribution, or reproduction of this repository or its contents is strictly prohibited. 
 
-   
+The project is structured to comply with Google AdSense requirements, including reserved spaces for ad banners and mandatory legal pages. It also integrates Google Analytics 4 (GA4) event tracking for file generations.
+
+## 📬 Contact
+
+Created with love in Costa Rica 🇨🇷.
+For inquiries, reach out to: haendelcr@gmail.com
