@@ -9,34 +9,29 @@
     <meta name="keywords" content="create kml, kmz converter, kml viewer online, kml map preview, google earth">
     <meta name="robots" content="index, follow">
 
-    <!-- 1. GOOGLE ANALYTICS 4 (GA4) - TRACKING -->
-    <!-- Reemplaza 'G-XXXXXXXXXX' con tu ID de medición real de Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GT7H0BTP2W"></script>
+    <!-- GOOGLE ANALYTICS 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-GT7H0BTP2W); // Pon tu ID aquí
+      gtag('config', 'G-XXXXXXXXXX'); 
     </script>
 
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Leaflet CSS (Para el mapa) -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     
     <style>
         @keyframes slideUp { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         .toast-enter { animation: slideUp 0.3s ease-out forwards; }
-        /* Ajuste para que el mapa no se superponga a otros elementos de Tailwind */
         #map { z-index: 10; } 
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col">
 
     <header class="bg-slate-900 text-white shadow-md z-20 relative">
-        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-            <div>
+        <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="text-center sm:text-left">
                 <h1 class="text-2xl font-extrabold tracking-tight" id="t-logo">KML Studio</h1>
                 <p class="text-slate-400 text-xs mt-1" id="t-slogan">Generate & Preview KML/KMZ</p>
             </div>
@@ -44,21 +39,23 @@
                 <option value="en">🇺🇸 English</option>
                 <option value="es">🇪🇸 Español</option>
                 <option value="pt">🇧🇷 Português</option>
+                <option value="fr">🇫🇷 Français</option>
+                <option value="de">🇩🇪 Deutsch</option>
+                <option value="zh">🇨🇳 中文</option>
+                <option value="ja">🇯🇵 日本語</option>
             </select>
         </div>
     </header>
 
     <main class="flex-grow max-w-7xl mx-auto px-4 py-8 w-full space-y-8">
 
-        <!-- ESPACIO ADSENSE SUPERIOR -->
+        <!-- ADSENSE TOP -->
         <div class="w-full bg-slate-200 text-slate-400 text-sm py-4 flex justify-center items-center rounded border border-dashed border-slate-300">
             [AdSense Top Banner]
         </div>
 
-        <!-- Sección Principal Dividida (Código a la izquierda, Mapa a la derecha) -->
+        <!-- TOOL & MAP SECTION -->
         <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            
-            <!-- Panel Izquierdo: Controles -->
             <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-100 p-6 space-y-5">
                 <div>
                     <label for="kmlInput" class="block text-sm font-bold text-slate-700 mb-2" id="t-label-code">Paste your KML code here:</label>
@@ -71,20 +68,17 @@
                 </div>
 
                 <div class="pt-2 flex flex-col gap-3">
-                    <!-- Botón 1: Previsualizar en Mapa -->
                     <button onclick="previewOnMap()" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 rounded-xl shadow transition-all flex justify-center items-center gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg>
                         <span id="t-btn-preview">Preview on Map</span>
                     </button>
                     
                     <div class="grid grid-cols-2 gap-3">
-                        <!-- Botón 2: Descargar KML -->
                         <button onclick="generarArchivo('kml')" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl shadow transition-all flex justify-center items-center gap-2">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
                             <span>.KML</span>
                         </button>
                         
-                        <!-- Botón 3: Descargar KMZ -->
                         <button onclick="generarArchivo('kmz')" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-xl shadow transition-all flex justify-center items-center gap-2">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
                             <span>.KMZ (Zip)</span>
@@ -93,47 +87,60 @@
                 </div>
             </div>
 
-            <!-- Panel Derecho: Visor de Mapa -->
             <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-100 flex flex-col min-h-[400px]">
                 <div class="bg-slate-100 px-4 py-3 border-b border-slate-200 flex justify-between items-center">
                     <span class="font-bold text-slate-700" id="t-map-title">Interactive Map Preview</span>
                 </div>
-                <!-- Contenedor del Mapa -->
                 <div id="map" class="flex-grow w-full h-full bg-slate-200"></div>
             </div>
-
         </section>
 
-        <!-- ESPACIO ADSENSE INFERIOR -->
+        <!-- ADSENSE MIDDLE -->
         <div class="w-full bg-slate-200 text-slate-400 text-sm py-4 flex justify-center items-center rounded border border-dashed border-slate-300">
-            [AdSense Bottom Banner]
+            [AdSense Middle Banner]
         </div>
+
+        <!-- SEO & EDUCATIONAL CONTENT (Prevents "Thin Content" Penalty) -->
+        <article class="bg-white rounded-2xl shadow-sm p-6 md:p-8 space-y-6 text-slate-700 leading-relaxed text-sm border border-slate-100">
+            <h2 class="text-xl font-bold text-slate-900 border-b pb-2" id="t-h2-1">What is a KML / KMZ file?</h2>
+            <p id="t-p-1">A KML (Keyhole Markup Language) file is a format used to display geographic data in an Earth browser such as Google Earth. It allows you to draw points, lines, and polygons to map out routes or land boundaries. A KMZ file is simply a compressed (zipped) version of a KML file, making it much smaller and easier to share over email or messaging apps.</p>
+
+            <h2 class="text-xl font-bold text-slate-900 border-b pb-2 mt-6" id="t-h2-2">How to use this tool on mobile devices?</h2>
+            <p id="t-p-2">Text editors on smartphones often corrupt KML code by saving it as a standard text file (.txt). To avoid this, simply paste your raw code into the text area above, set a file name, and hit download. This tool forces your browser to save the exact format (.kml or .kmz) securely to your device without storing your data on external servers. You can then open it directly via the Google Earth app.</p>
+        </article>
 
     </main>
 
-    <!-- PIE DE PÁGINA (Hecho en Costa Rica) -->
+    <!-- FOOTER WITH LEGAL LINKS AND BADGE -->
     <footer class="bg-slate-900 text-slate-400 py-8 text-center text-xs mt-auto">
-        <div class="max-w-4xl mx-auto px-4 flex flex-col items-center space-y-4">
+        <div class="max-w-4xl mx-auto px-4 flex flex-col items-center space-y-5">
+            
             <div class="flex items-center gap-2 bg-slate-800 px-4 py-2 rounded-full border border-slate-700 shadow-inner">
                 <div class="w-5 h-5 rounded-full overflow-hidden flex flex-col border border-slate-600 flex-shrink-0">
                     <div class="bg-[#002B7F] h-[16.6%]"></div><div class="bg-white h-[16.6%]"></div>
                     <div class="bg-[#CE1126] h-[33.2%]"></div>
                     <div class="bg-white h-[16.6%]"></div><div class="bg-[#002B7F] h-[17%]"></div>
                 </div>
-                <span class="text-slate-300 font-medium tracking-wide">Made in Costa Rica with love</span>
+                <span class="text-slate-300 font-medium tracking-wide" id="t-made-cr">Made in Costa Rica with love</span>
             </div>
-            <p class="mt-4">&copy; 2026 KML Studio. <span id="t-rights">All rights reserved.</span></p>
+
+            <div class="flex flex-wrap justify-center gap-6 mt-2 font-medium text-sm">
+                <a href="privacidad.html" class="hover:text-white transition" id="t-privacy">Privacy Policy</a>
+                <a href="terminos.html" class="hover:text-white transition" id="t-terms">Terms of Service</a>
+                <a href="mailto:haendelcr@gmail.com" class="hover:text-white transition" id="t-contact">Contact</a>
+            </div>
+
+            <p>&copy; 2026 KML Studio. <span id="t-rights">All rights reserved.</span></p>
         </div>
     </footer>
 
     <div id="toastContainer" class="fixed bottom-4 left-4 right-4 flex flex-col items-center gap-2 pointer-events-none z-50"></div>
 
-    <!-- Librerías Externas -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
     <script>
-        // --- 1. DICCIONARIO DE IDIOMAS ---
+        // --- 1. LANGUAGE DICTIONARY ---
         const i18n = {
             en: {
                 "seo-title": "KML Studio - Create & View routes",
@@ -143,11 +150,19 @@
                 "t-label-name": "File name:",
                 "t-btn-preview": "Preview on Map",
                 "t-map-title": "Interactive Map Preview",
+                "t-h2-1": "What is a KML / KMZ file?",
+                "t-p-1": "A KML (Keyhole Markup Language) file is a format used to display geographic data in an Earth browser such as Google Earth. It allows you to draw points, lines, and polygons to map out routes or land boundaries. A KMZ file is simply a compressed (zipped) version of a KML file, making it much smaller and easier to share over email or messaging apps.",
+                "t-h2-2": "How to use this tool on mobile devices?",
+                "t-p-2": "Text editors on smartphones often corrupt KML code by saving it as a standard text file (.txt). To avoid this, simply paste your raw code into the text area above, set a file name, and hit download. This tool forces your browser to save the exact format (.kml or .kmz) securely to your device without storing your data on external servers. You can then open it directly via the Google Earth app.",
+                "t-made-cr": "Made in Costa Rica with love",
+                "t-privacy": "Privacy Policy",
+                "t-terms": "Terms of Service",
+                "t-contact": "Contact",
                 "t-rights": "All rights reserved.",
                 "msg-empty": "Text area is empty. Paste KML code first.",
                 "msg-downloading": "Downloading: ",
                 "msg-error": "There was an error generating the file.",
-                "msg-nomap": "Could not find valid coordinates to draw."
+                "msg-nomap": "Could not find valid coordinates."
             },
             es: {
                 "seo-title": "KML Studio - Generador y Visor de rutas",
@@ -157,11 +172,19 @@
                 "t-label-name": "Nombre del archivo:",
                 "t-btn-preview": "Previsualizar en Mapa",
                 "t-map-title": "Visor de Mapa Interactivo",
+                "t-h2-1": "¿Qué es un archivo KML / KMZ?",
+                "t-p-1": "Un archivo KML es un formato utilizado para mostrar datos geográficos en visores como Google Earth. Permite dibujar puntos, líneas y polígonos. Un archivo KMZ es simplemente la versión comprimida (.zip) del KML, lo que lo hace más ligero y fácil de compartir.",
+                "t-h2-2": "¿Cómo usar esta herramienta en celulares?",
+                "t-p-2": "Los editores de texto en teléfonos suelen arruinar el código al guardarlo como .txt. Para evitarlo, pega tu código aquí, ponle nombre y descarga. Esto fuerza al navegador a guardarlo en formato nativo sin usar servidores externos. Luego ábrelo directo en Google Earth.",
+                "t-made-cr": "Hecho en Costa Rica con amor",
+                "t-privacy": "Política de Privacidad",
+                "t-terms": "Términos de Servicio",
+                "t-contact": "Contacto",
                 "t-rights": "Todos los derechos reservados.",
                 "msg-empty": "El área de texto está vacía. Pega el código primero.",
                 "msg-downloading": "Descargando: ",
                 "msg-error": "Hubo un error al generar el archivo.",
-                "msg-nomap": "No se encontraron coordenadas válidas para dibujar."
+                "msg-nomap": "No se encontraron coordenadas válidas."
             },
             pt: {
                 "seo-title": "KML Studio - Crie e Visualize rotas",
@@ -170,12 +193,108 @@
                 "t-label-code": "Cole seu código KML aqui:",
                 "t-label-name": "Nome do arquivo:",
                 "t-btn-preview": "Pré-visualizar no Mapa",
-                "t-map-title": "Visualização Interativa do Mapa",
+                "t-map-title": "Visualização Interativa",
+                "t-h2-1": "O que é um arquivo KML / KMZ?",
+                "t-p-1": "Um arquivo KML é um formato usado para exibir dados geográficos em navegadores como o Google Earth. Um arquivo KMZ é a versão compactada (zip) de um KML, tornando-o mais leve e fácil de compartilhar.",
+                "t-h2-2": "Como usar esta ferramenta no celular?",
+                "t-p-2": "Editores de texto em smartphones frequentemente salvam arquivos como .txt por engano. Cole seu código aqui e faça o download diretamente para o formato correto (.kml ou .kmz) sem enviar seus dados para servidores externos.",
+                "t-made-cr": "Feito na Costa Rica com amor",
+                "t-privacy": "Política de Privacidade",
+                "t-terms": "Termos de Serviço",
+                "t-contact": "Contato",
                 "t-rights": "Todos os direitos reservados.",
-                "msg-empty": "A área de texto está vazia. Cole o código primeiro.",
+                "msg-empty": "A área de texto está vazia.",
                 "msg-downloading": "Baixando: ",
-                "msg-error": "Ocorreu um erro ao gerar o arquivo.",
-                "msg-nomap": "Não foram encontradas coordenadas válidas."
+                "msg-error": "Ocorreu um erro.",
+                "msg-nomap": "Nenhuma coordenada válida encontrada."
+            },
+            fr: {
+                "seo-title": "KML Studio - Créer et visualiser des itinéraires",
+                "t-logo": "KML Studio",
+                "t-slogan": "Générer et prévisualiser KML/KMZ",
+                "t-label-code": "Collez votre code KML ici :",
+                "t-label-name": "Nom du fichier :",
+                "t-btn-preview": "Prévisualiser sur la carte",
+                "t-map-title": "Carte interactive",
+                "t-h2-1": "Qu'est-ce qu'un fichier KML / KMZ ?",
+                "t-p-1": "Un fichier KML est utilisé pour afficher des données géographiques dans Google Earth. Un fichier KMZ est simplement une version compressée (zip) d'un fichier KML, ce qui le rend plus léger et plus facile à partager.",
+                "t-h2-2": "Comment utiliser cet outil sur mobile ?",
+                "t-p-2": "Collez votre code brut ici et téléchargez-le pour forcer le navigateur à le sauvegarder au format exact (.kml ou .kmz) sans que vos données soient stockées sur des serveurs externes.",
+                "t-made-cr": "Fait au Costa Rica avec amour",
+                "t-privacy": "Politique de confidentialité",
+                "t-terms": "Conditions d'utilisation",
+                "t-contact": "Contact",
+                "t-rights": "Tous droits réservés.",
+                "msg-empty": "La zone de texte est vide.",
+                "msg-downloading": "Téléchargement : ",
+                "msg-error": "Une erreur s'est produite.",
+                "msg-nomap": "Aucune coordonnée valide trouvée."
+            },
+            de: {
+                "seo-title": "KML Studio - Routen erstellen und anzeigen",
+                "t-logo": "KML Studio",
+                "t-slogan": "KML/KMZ generieren & ansehen",
+                "t-label-code": "Fügen Sie Ihren KML-Code hier ein:",
+                "t-label-name": "Dateiname:",
+                "t-btn-preview": "Auf Karte ansehen",
+                "t-map-title": "Interaktive Karte",
+                "t-h2-1": "Was ist eine KML / KMZ Datei?",
+                "t-p-1": "Eine KML-Datei wird verwendet, um geografische Daten in Google Earth anzuzeigen. Eine KMZ-Datei ist lediglich eine komprimierte (Zip-)Version, die kleiner und einfacher zu teilen ist.",
+                "t-h2-2": "Wie nutzt man dieses Tool auf Mobilgeräten?",
+                "t-p-2": "Fügen Sie Ihren Code hier ein und laden Sie die Datei herunter, um sie im exakten Format (.kml oder .kmz) auf Ihrem Gerät zu speichern, ohne externe Server zu nutzen.",
+                "t-made-cr": "Mit Liebe in Costa Rica gemacht",
+                "t-privacy": "Datenschutz",
+                "t-terms": "Nutzungsbedingungen",
+                "t-contact": "Kontakt",
+                "t-rights": "Alle Rechte vorbehalten.",
+                "msg-empty": "Textfeld ist leer.",
+                "msg-downloading": "Wird heruntergeladen: ",
+                "msg-error": "Ein Fehler ist aufgetreten.",
+                "msg-nomap": "Keine gültigen Koordinaten gefunden."
+            },
+            zh: {
+                "seo-title": "KML Studio - 创建和查看路线",
+                "t-logo": "KML Studio",
+                "t-slogan": "生成并预览 KML/KMZ",
+                "t-label-code": "在此处粘贴您的 KML 代码：",
+                "t-label-name": "文件名：",
+                "t-btn-preview": "在地图上预览",
+                "t-map-title": "交互式地图",
+                "t-h2-1": "什么是 KML / KMZ 文件？",
+                "t-p-1": "KML 文件用于在 Google 地球等浏览器中显示地理数据。KMZ 文件是 KML 文件的压缩版本，体积更小，更易于分享。",
+                "t-h2-2": "如何在移动设备上使用此工具？",
+                "t-p-2": "将原始代码粘贴到此处并下载，浏览器将以精确的格式（.kml 或 .kmz）将其安全地保存到您的设备，而无需在外部服务器上存储数据。",
+                "t-made-cr": "哥斯达黎加用爱制造",
+                "t-privacy": "隐私政策",
+                "t-terms": "服务条款",
+                "t-contact": "联系方式",
+                "t-rights": "版权所有。",
+                "msg-empty": "文本区域为空。",
+                "msg-downloading": "正在下载：",
+                "msg-error": "生成文件时出错。",
+                "msg-nomap": "找不到有效的坐标。"
+            },
+            ja: {
+                "seo-title": "KML Studio - ルートの作成と表示",
+                "t-logo": "KML Studio",
+                "t-slogan": "KML/KMZの生成とプレビュー",
+                "t-label-code": "KMLコードをここに貼り付けます：",
+                "t-label-name": "ファイル名：",
+                "t-btn-preview": "マップでプレビュー",
+                "t-map-title": "インタラクティブマップ",
+                "t-h2-1": "KML / KMZファイルとは何ですか？",
+                "t-p-1": "KMLファイルは、Google Earthで地理データを表示するために使用されます。KMZは圧縮バージョンであり、共有が簡単です。",
+                "t-h2-2": "モバイルでの使用方法は？",
+                "t-p-2": "ここにコードを貼り付けてダウンロードすると、外部サーバーにデータを保存することなく、正確な形式（.kml または .kmz）でデバイスに保存されます。",
+                "t-made-cr": "コスタリカから愛を込めて",
+                "t-privacy": "プライバシーポリシー",
+                "t-terms": "利用規約",
+                "t-contact": "連絡先",
+                "t-rights": "無断転載を禁じます。",
+                "msg-empty": "テキストエリアが空です。",
+                "msg-downloading": "ダウンロード中: ",
+                "msg-error": "エラーが発生しました。",
+                "msg-nomap": "有効な座標が見つかりません。"
             }
         };
 
@@ -197,12 +316,11 @@
             }
         }
 
-        // --- 2. INICIALIZACIÓN DEL MAPA (LEAFLET) ---
+        // --- 2. MAP INITIALIZATION ---
         let map;
         let rutaLayer;
 
         window.onload = () => {
-            // Configurar Idioma por defecto
             const userLang = navigator.language || navigator.userLanguage;
             const langCode = userLang.split('-')[0];
             if(i18n[langCode]) {
@@ -210,16 +328,13 @@
                 changeLanguage(langCode);
             }
 
-            // Iniciar Mapa centrado globalmente (O puedes poner coordenadas de Costa Rica: [9.928, -84.090])
             map = L.map('map').setView([9.928, -84.090], 7);
-            
-            // Cargar capa de calles de OpenStreetMap
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; OpenStreetMap contributors'
+                attribution: '&copy; OpenStreetMap'
             }).addTo(map);
         };
 
-        // --- 3. FUNCIÓN DE PREVISUALIZACIÓN EN MAPA ---
+        // --- 3. PREVIEW FUNCTION ---
         function previewOnMap() {
             const kmlContent = document.getElementById('kmlInput').value.trim();
             if (!kmlContent) {
@@ -227,18 +342,15 @@
                 return;
             }
 
-            // Limpiar ruta anterior si existe
             if (rutaLayer) { map.removeLayer(rutaLayer); }
 
             try {
-                // Analizador básico de XML para extraer coordenadas
                 const parser = new DOMParser();
                 const xmlDoc = parser.parseFromString(kmlContent, "text/xml");
                 const coordsNodes = xmlDoc.getElementsByTagName("coordinates");
                 
                 let allLatLngs = [];
                 
-                // Recorrer todos los nodos de coordenadas y extraer puntos
                 for(let i=0; i<coordsNodes.length; i++) {
                     const text = coordsNodes[i].textContent.trim();
                     const points = text.split(/\s+/);
@@ -257,26 +369,22 @@
                     });
 
                     if(latLngs.length > 0) {
-                        // Dibujar línea roja en el mapa
                         rutaLayer = L.polyline(latLngs, {color: 'red', weight: 5}).addTo(map);
                     }
                 }
 
                 if(allLatLngs.length > 0) {
-                    // Ajustar la cámara del mapa para que se vea toda la ruta
                     map.fitBounds(L.latLngBounds(allLatLngs));
-                    mostrarToast("Ruta trazada en el mapa", "success");
                 } else {
                     mostrarToast(i18n[currentLang]['msg-nomap'], 'error');
                 }
 
             } catch (e) {
-                console.error(e);
                 mostrarToast(i18n[currentLang]['msg-error'], 'error');
             }
         }
 
-        // --- 4. FUNCIÓN DE GENERACIÓN (KML y KMZ) ---
+        // --- 4. GENERATION FUNCTION ---
         async function generarArchivo(tipo) {
             const kmlContent = document.getElementById('kmlInput').value.trim();
             let fileName = document.getElementById('fileName').value.trim() || 'MyRoute';
@@ -291,21 +399,15 @@
                 let finalName = fileName;
 
                 if (tipo === 'kmz') {
-                    // Lógica para KMZ usando JSZip
                     if (!finalName.toLowerCase().endsWith('.kmz')) finalName += '.kmz';
-                    
-                    mostrarToast("Comprimiendo a KMZ...", "success");
                     const zip = new JSZip();
-                    zip.file("doc.kml", kmlContent); // El KML debe ir dentro del zip con este nombre
+                    zip.file("doc.kml", kmlContent); 
                     finalBlob = await zip.generateAsync({type:"blob"});
-                    
                 } else {
-                    // Lógica normal para KML
                     if (!finalName.toLowerCase().endsWith('.kml')) finalName += '.kml';
                     finalBlob = new Blob([kmlContent], { type: 'application/vnd.google-earth.kml+xml' });
                 }
 
-                // Descarga
                 const url = URL.createObjectURL(finalBlob);
                 const a = document.createElement('a');
                 a.style.display = 'none';
@@ -321,7 +423,6 @@
 
                 mostrarToast(i18n[currentLang]['msg-downloading'] + finalName, 'success');
 
-                // --- TRACKING PARA GOOGLE ANALYTICS ---
                 if (typeof gtag === 'function') {
                     gtag('event', 'file_generated', {
                         'file_type': tipo,
@@ -334,7 +435,6 @@
             }
         }
 
-        // --- NOTIFICACIONES ---
         function mostrarToast(mensaje, tipo = 'success') {
             const container = document.getElementById('toastContainer');
             const toast = document.createElement('div');
